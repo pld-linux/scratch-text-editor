@@ -4,19 +4,21 @@ Version:	1.1.1
 Release:	0.1
 License:	GPL v3
 Group:		X11/Applications/Editors
-Source0:	https://launchpad.net/scratch/1.x/1.1.1/+download/scratch-%{version}.tar.gz
-# Source0-md5:	c82784fcd53641b6436109eee009dcde
+#Source0:	https://launchpad.net/scratch/1.x/1.1.1/+download/scratch-%{version}.tar.gz
+Source0:	scratch-%{version}-r991.tar.bz2
+# Source0-md5:	65d6df04f254562f2be71561e2adae05
+# https://bugs.launchpad.net/scratch/+bug/1051678
 URL:		https://launchpad.net/scratch/
 BuildRequires:	GConf2-devel
 BuildRequires:	cmake
-BuildRequires:	devhelp-devel < 3.6
+BuildRequires:	devhelp-devel
 BuildRequires:	gail-devel
 BuildRequires:	gobject-introspection
 BuildRequires:	granite-devel
 BuildRequires:	gtk+3-devel
 BuildRequires:	gtk-webkit3-devel
 BuildRequires:	gtksourceview-devel
-BuildRequires:	gtkspell-devel
+BuildRequires:	gtkspell3-devel
 BuildRequires:	libgee0.6-devel
 BuildRequires:	libpeas-devel
 BuildRequires:	libsoup-devel
@@ -26,6 +28,7 @@ BuildRequires:	libzeitgeist-devel
 BuildRequires:	pkg-config
 BuildRequires:	python-chardet
 BuildRequires:	rpmbuild(macros) >= 1.228
+BuildRequires:	sed >= 4.0
 BuildRequires:	vala
 BuildRequires:	vte0-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -56,6 +59,8 @@ Makefile, Objective C, Pascal, Perl, Python, Ruby, XML.
 
 %prep
 %setup -q -n scratch
+
+%{__sed} -i -e 's/gtkspell-3.0/gtkspell3-3.0/' plugins/spell-check/CMakeLists.txt
 
 %build
 install -d build
